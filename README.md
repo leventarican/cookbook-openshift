@@ -56,3 +56,6 @@ minishift stop
 ```
 minishift delete
 ```
+
+8. centos 
+* default login root:centos
