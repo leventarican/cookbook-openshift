@@ -1,4 +1,12 @@
-# run OpenShift on local machine
+Simple demonstration of S2I. OpenShift will pull source (our webapp) and build an image based on Wildfly (Application Server).
+
+Our Webapp has a index.html page and one REST API.
+
+![OpenShift Console](openshift-console.png)
+![index page](index.png)
+![REST API: hearbeat](rest.png)
+
+# OpenShift on local machine
 
 __about__
 
