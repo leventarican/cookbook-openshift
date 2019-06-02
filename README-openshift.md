@@ -33,13 +33,13 @@ OS name: "linux", version: "3.10.0-862.6.3.el7.x86_64", arch: "amd64", family: "
 ## Troubleshooting
 __DNS Issues__
 
-If you have trouble to reach / resolve the the exposed route then you may have issues with DNS. For me the two option worked:
+If you have trouble to reach / resolve the exposed route then you may have issues with DNS. For me the two option worked:
 1. whitelist domain xip.io or nip.io in your browser.
 ```
 Domain whitelist under OpenWrt / LEDE:
 Network > DHCP and DNS > Domain whitelist > add xip.io or nip.io
 ```
-2. you can also forward the port to localhost. You app will then reachable through localhost:8080
+2. you can also forward the port to localhost. Your app will then reachable through localhost:8080
 ```
 oc project <project-name>
 oc get pods
@@ -58,9 +58,9 @@ $ minishift ip
 
 To set the routing suffix to xip.io, run the following command after the IP-ADDRESS with the actual IP address you found from the previous command.
 
-$ minishift openshift config set --patch '{"routingConfig":{"subdomain":"192.168.99.106.xip.io"}}'
+$ minishift openshift config set --patch '{"routingConfig":{"subdomain":"<local-ip>.xip.io"}}'
 
-minishift openshift config set --patch "{\"routingConfig\": {\"subdomain\": \"192.168.99.106.xip.io\"}}"
+minishift openshift config set --patch "{\"routingConfig\": {\"subdomain\": \"<local-ip>.xip.io\"}}"
 
-"{\"routingConfig\": {\"subdomain\": \"192.168.99.106.nip.io\"}}"
+"{\"routingConfig\": {\"subdomain\": \"<local-ip>.nip.io\"}}"
 ```
