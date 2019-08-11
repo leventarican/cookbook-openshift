@@ -63,6 +63,11 @@ minishift stop
 * delete minishift
 ```
 minishift delete
+minishift delete --force --clear-cache
+```
+* access (openshift) docker
+```
+minishift ssh -- docker ps
 ```
 
 8. centos 
