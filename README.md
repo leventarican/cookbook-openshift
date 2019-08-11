@@ -72,3 +72,9 @@ minishift ssh -- docker ps
 
 8. centos 
 * default login root:centos
+
+9. troubleshooting
+* if you have connection to port 8443, then ensure to stop process `virtualbox DCHP` in task / process manager.
+```
+Error: Get https://192.168.0.20:8443/healthz/ready: dial tcp 192.168.0.20:8443: connectex: No connection could be made because the target machine actively refused it
+```
