@@ -6,7 +6,7 @@ Our Webapp has a index.html page and one REST API.
 ![index page](index.png)
 ![REST API: hearbeat](rest.png)
 
-# OpenShift 4 on local machine with CodeReady Containers (crc)
+# OpenShift 4 on local machine with CodeReady Containers
 * _CodeReady Containers isn't Minishift- it's an entirely new approach to running Kubernetes locally._
 
 __quickstart (if already setup)__
@@ -49,10 +49,6 @@ Cache Directory: /home/code/.crc/cache
 ```
 
 __troubleshooting__
-* install requirements: `sudo apt install qemu-kvm libvirt-daemon libvirt-daemon-system network-manager`
-* download crc linux `crc-linux-amd64.tar.xz` (~ 2.0GB)
-* add location to path
-* setup and start: `crc setup` and `crc start`
 ```
 $ crc status
 ERRO Unable to connect to the server: dial tcp: lookup api.crc.testing: no such host
@@ -64,12 +60,12 @@ ERRO Unable to connect to the server: dial tcp: lookup api.crc.testing: no such 
 * other discussed solutions how to get work crc on ubuntu: https://github.com/code-ready/crc/issues/549
 
 __links__
-https://code-ready.github.io/crc/
-https://github.com/code-ready/crc/releases
-https://developers.redhat.com/products/codeready-containers
-https://developers.redhat.com/openshift/local-openshift/
-https://developers.redhat.com/blog/2019/09/05/red-hat-openshift-4-on-your-laptop-introducing-red-hat-codeready-containers/
-https://libvirt.org/index.html
+* https://code-ready.github.io/crc/
+* https://github.com/code-ready/crc/releases
+* https://developers.redhat.com/products/codeready-containers
+* https://developers.redhat.com/openshift/local-openshift/
+* https://developers.redhat.com/blog/2019/09/05/red-hat-openshift-4-on-your-laptop-introducing-red-hat-codeready-containers/
+* https://libvirt.org/index.html
 
 # OpenShift on local machine
 
