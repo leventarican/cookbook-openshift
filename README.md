@@ -6,6 +6,71 @@ Our Webapp has a index.html page and one REST API.
 ![index page](index.png)
 ![REST API: hearbeat](rest.png)
 
+# OpenShift 4 on local machine with CodeReady Containers (crc)
+* _CodeReady Containers isn't Minishift- it's an entirely new approach to running Kubernetes locally._
+
+__quickstart (if already setup)__
+* start: `crc start` (password will displayed)
+* stop: `crc stop`
+* open web console: `crc console`
+* openshift cli: `~/.crc/bin/oc` (add bin directory in your path)
+
+__virtualbox__
+* _removed virtualbox support_: https://github.com/code-ready/crc/issues/838
+* _no virtualbox support for linux_: https://github.com/code-ready/crc/issues/625#issuecomment-534385953
+* get latest crc (e.g. `crc_virtualbox_4.2.8.crcbundle`) from: https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/
+* run crc: `crc start --vm-driver virtualbox --bundle path_to_system_bundle`
+
+__CodeReady Containers virtual machine__
+* with KVM / libvirt (native hypervisor)
+* stop the CodeReady Containers virtual machine and OpenShift cluster: `crc stop`
+* `crc start` for debug: `crc start --log-level debug`
+    * you will _once_ prompt for a image pull secret (a personalized secret)
+```
+INFO To access the cluster, first set up your environment by following 'crc oc-env' instructions 
+INFO Then you can access it by running 'oc login -u developer -p developer https://api.crc.testing:6443' 
+INFO To login as an admin, username is 'kubeadmin' and password is 
+INFO                                              
+INFO You can now run 'crc console' and use these credentials to access the OpenShift web console 
+```
+* open web console
+```
+$ crc console
+Opening the OpenShift Web Console in the default browser...
+```
+* show status
+```
+$ crc status
+CRC VM:          Running
+OpenShift:       Running (v4.2.8)
+Disk Usage:      9.364GB of 32.2GB (Inside the CRC VM)
+Cache Usage:     11.01GB
+Cache Directory: /home/code/.crc/cache
+```
+
+__troubleshooting__
+* install requirements: `sudo apt install qemu-kvm libvirt-daemon libvirt-daemon-system network-manager`
+* download crc linux `crc-linux-amd64.tar.xz` (~ 2.0GB)
+* add location to path
+* setup and start: `crc setup` and `crc start`
+```
+$ crc status
+ERRO Unable to connect to the server: dial tcp: lookup api.crc.testing: no such host
+ - exit status 1 
+```
+* ubuntu is not officially supported: _Ubuntu 18.04 LTS or newer and Debian 10 or newer are not officially supported and may require manual set up of the host machine._
+    * https://code-ready.github.io/crc/#_linux
+* simple solution is to use NetworkManager instead systemd-resolver: https://labs.consol.de/devops/linux/2019/11/29/codeready-containers-on-ubuntu.html
+* other discussed solutions how to get work crc on ubuntu: https://github.com/code-ready/crc/issues/549
+
+__links__
+https://code-ready.github.io/crc/
+https://github.com/code-ready/crc/releases
+https://developers.redhat.com/products/codeready-containers
+https://developers.redhat.com/openshift/local-openshift/
+https://developers.redhat.com/blog/2019/09/05/red-hat-openshift-4-on-your-laptop-introducing-red-hat-codeready-containers/
+https://libvirt.org/index.html
+
 # OpenShift on local machine
 
 __about__
