@@ -1,3 +1,56 @@
+_OpenShift is a Kubernetes platform_
+
+# openshift on azure
+https://github.com/kedacore/keda/wiki/Using-Keda-and-Azure-Functions-on-Openshift-4
+
+# docker container alternatives
+* OCI container: buildah, google jib, ...
+
+# openshift
+
+__build strategies__
+* Docker build
+    * expects a repository with a _Dockerfile_
+* Source-to-Image (S2I) build
+* Custom build
+* Pipeline build strategy (CI/CD)
+    * Pipeline workflows are defined in a _Jenkinsfile_ or embedded directly in the build configuration
+https://docs.openshift.com/container-platform/4.2/builds/understanding-image-builds.html
+
+Override the build strategy by setting the --strategy flag to either pipeline or source.
+```
+$ oc new-app /home/user/code/myapp --strategy=docker
+```
+https://docs.openshift.com/container-platform/4.2/applications/application-life-cycle-management/creating-applications-using-cli.html#build-strategy-detection
+
+__UBI Images__
+* S2I (Source to Image) are builder images used by OpenShift to build image streams.
+* UBI images:
+    * GraalVM Native S2I
+    * Binary S2I
+https://github.com/quarkusio/quarkus-images
+
+# quarkus example
+https://quarkus.io/guides/deploying-to-openshift-s2i
+
+__create app__
+```
+oc new-app quay.io/quarkus/ubi-quarkus-native-s2i:19.2.1~https://github.com/quarkusio/quarkus-quickstarts.git --context-dir=getting-started --name=quarkus-quickstart-native
+```
+* tag `19.3.0-java11` doesnt worked for me.
+https://quay.io/repository/quarkus/ubi-quarkus-native-s2i?tag=latest&tab=tags
+
+__expose service to the outside world__
+```
+oc expose svc/quarkus-quickstart-native
+```
+
+__delete all resources__
+```
+oc delete all --selector app=quarkus-quickstart-native
+```
+
+# sample application
 Simple demonstration of S2I. OpenShift will pull source (our webapp) and build an image based on Wildfly (Application Server).
 
 Our Webapp has a index.html page and one REST API.
@@ -21,7 +74,7 @@ __virtualbox__
 * get latest crc (e.g. `crc_virtualbox_4.2.8.crcbundle`) from: https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/
 * run crc: `crc start --vm-driver virtualbox --bundle path_to_system_bundle`
 
-__CodeReady Containers virtual machine__
+__CRC virtual machine on ubuntu__
 * with KVM / libvirt (native hypervisor)
 * stop the CodeReady Containers virtual machine and OpenShift cluster: `crc stop`
 * `crc start` for debug: `crc start --log-level debug`
@@ -66,6 +119,7 @@ __links__
 * https://developers.redhat.com/openshift/local-openshift/
 * https://developers.redhat.com/blog/2019/09/05/red-hat-openshift-4-on-your-laptop-introducing-red-hat-codeready-containers/
 * https://libvirt.org/index.html
+* https://docs.openshift.com/container-platform/4.2/welcome/index.html
 
 # OpenShift on local machine
 
