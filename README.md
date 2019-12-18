@@ -1,5 +1,21 @@
 _OpenShift is a Kubernetes platform_
 
+# odo: OpenShift Do
+* developer-focused CLI for OpenShift 
+* get odo
+```
+curl -L https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64 -o odo
+```
+* make it runnable
+```
+chmod +x odo
+```
+* list developer catalog
+```
+odo catalog list components
+```
+* https://docs.openshift.com/container-platform/4.2/cli_reference/openshift_developer_cli/understanding-odo.html
+
 # openshift on azure
 https://github.com/kedacore/keda/wiki/Using-Keda-and-Azure-Functions-on-Openshift-4
 
@@ -8,27 +24,36 @@ https://github.com/kedacore/keda/wiki/Using-Keda-and-Azure-Functions-on-Openshif
 
 # openshift
 
+__container__
+_Containers in OpenShift Container Platform are based on OCI- or Docker-formatted container images._
+
 __build strategies__
 * Docker build
     * expects a repository with a _Dockerfile_
 * Source-to-Image (S2I) build
+    * builder image: injecting sourcecode into a container (base/builder) image and assemble a new image.
+    * _OpenShift Container Platform also supplies builder images that assist with creating new images by adding your code or configuration to existing images._
+    * base image (docker context): _A base image has FROM scratch in its Dockerfile._
 * Custom build
 * Pipeline build strategy (CI/CD)
     * Pipeline workflows are defined in a _Jenkinsfile_ or embedded directly in the build configuration
-https://docs.openshift.com/container-platform/4.2/builds/understanding-image-builds.html
-
-Override the build strategy by setting the --strategy flag to either pipeline or source.
+* https://docs.openshift.com/container-platform/4.2/builds/understanding-image-builds.html
+* Override the build strategy by setting the --strategy flag to either pipeline or source.
 ```
 $ oc new-app /home/user/code/myapp --strategy=docker
 ```
-https://docs.openshift.com/container-platform/4.2/applications/application-life-cycle-management/creating-applications-using-cli.html#build-strategy-detection
+* https://docs.openshift.com/container-platform/4.2/applications/application-life-cycle-management/creating-applications-using-cli.html#build-strategy-detection
+* https://docs.openshift.com/container-platform/4.2/builds/understanding-image-builds.html#build-strategy-s2i_understanding-image-builds
+* https://developer.ibm.com/tutorials/creating-your-own-source-to-image-entry-openshift/
+* https://docs.docker.com/develop/develop-images/baseimages/
+* https://docs.openshift.com/container-platform/4.2/openshift_images/images-understand.html#images-about_images-understand
 
 __UBI Images__
 * S2I (Source to Image) are builder images used by OpenShift to build image streams.
 * UBI images:
     * GraalVM Native S2I
     * Binary S2I
-https://github.com/quarkusio/quarkus-images
+* https://github.com/quarkusio/quarkus-images
 
 # quarkus example
 https://quarkus.io/guides/deploying-to-openshift-s2i
@@ -38,7 +63,7 @@ __create app__
 oc new-app quay.io/quarkus/ubi-quarkus-native-s2i:19.2.1~https://github.com/quarkusio/quarkus-quickstarts.git --context-dir=getting-started --name=quarkus-quickstart-native
 ```
 * tag `19.3.0-java11` doesnt worked for me.
-https://quay.io/repository/quarkus/ubi-quarkus-native-s2i?tag=latest&tab=tags
+* https://quay.io/repository/quarkus/ubi-quarkus-native-s2i?tag=latest&tab=tags
 
 __expose service to the outside world__
 ```
