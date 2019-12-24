@@ -25,7 +25,50 @@ https://github.com/kedacore/keda/wiki/Using-Keda-and-Azure-Functions-on-Openshif
 # openshift
 
 __container__
+
 _Containers in OpenShift Container Platform are based on OCI- or Docker-formatted container images._
+
+__(container) image, builder image / base image, custom / application image, image streams__
+* builder image: e.g. a application server
+* custom image: e.g. application server and your app
+* container images are stored in image registry e.g. docker hub, quay.io,registry.access.redhat.com
+    * openshift has an internal image registry
+    * https://blog.openshift.com/image-streams-faq/
+    * https://itnext.io/variations-on-imagestreams-in-openshift-4-f8ee5e8be633
+
+![OpenShift Container Image; created with UMlet](openshift-images.png)
+
+_OpenShift in Action_
+> * Image streams monitor for changes and trigger new deployments and builds for applications.
+> * Build configs track everything required to build an application deployment.
+> * Deployment configs keep track of all information required to deploy an application.
+> * Pods are the default unit of work. They’re where your application code is served.
+> * Deployments are unique deployed versions of an application.
+> * Container images are the template used to deploy application pods.
+> * Services are a consistent interface for all the application pods for a deployment.
+> * Routes are external-facing, DNS-based load-balancer entries that are connected to services.
+> * Replication controllers ensure that the desired number of application pods is running at all times.
+
+application components:
+> * Custom container images
+> * Image streams
+> * Application pods
+> * Build configs
+> * Deployment configs
+> * Deployments
+> * Services
+
+> how OpenShift creates and uses custom container images for each application.
+
+> Each application deployment in OpenShift creates a custom container image to serve your application. This image is created using the application’s source code and a custom base image called a _builder image_.
+
+> 1. OpenShift creates a custom container image using your source code and the builder image template you specified. For example, app-cli and app-gui use the PHP builder image.
+> 2. This image is uploaded to the OpenShift container image registry.
+> 3. OpenShift creates a build config to document how your application is built. This includes which image was created, the builder image used, the location of the source code, and other information.
+> 4. OpenShift creates a deployment config to control deployments and deploy and update your applications. Information in deployment configs includes the number of replicas, the upgrade method, and application-specific variables and mounted volumes.
+> 5. OpenShift creates a deployment, which represents a single deployed version of an application. Each unique application deployment is associated with your application’s deployment config component.
+> 6. The OpenShift internal load balancer is updated with an entry for the DNS record for the application. This entry will be linked to a component that’s created by Kubernetes, which we’ll get to shortly.
+> 7. OpenShift creates an image stream component. In OpenShift, an image stream monitors the builder image, deployment config, and other components for changes. If a change is detected, image streams can trigger application redeployments to reflect changes.
 
 __build strategies__
 * Docker build
@@ -54,6 +97,17 @@ __UBI Images__
     * GraalVM Native S2I
     * Binary S2I
 * https://github.com/quarkusio/quarkus-images
+
+__create builder image__
+* https://docs.openshift.com/container-platform/3.11/creating_images/s2i.html#s2i-scripts
+* https://blog.openshift.com/create-s2i-builder-image/?extIdCarryOver=true&intcmp=7013a000002CtetAAC&sc_cid=701f2000001OH6pAAG
+
+__S2I__
+
+Let see what the tool s2i https://github.com/openshift/source-to-image/releases/ says:
+> Source-to-image (S2I) is a tool for building repeatable docker images.
+
+> A command line interface that injects and assembles source code into a docker image.
 
 # quarkus example
 https://quarkus.io/guides/deploying-to-openshift-s2i
