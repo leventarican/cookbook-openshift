@@ -1,3 +1,12 @@
+# Table of Content
+1. [odo](#odo-openshift-do)
+2. [azure](#openshift-on-azure)
+3. [container](#docker-container-alternatives)
+4. [openshift](#openshift)
+5. [quarkus](#quarkus-example)
+6. [crc](#codeready-containers)
+6. [minishift](#minishift)
+
 _OpenShift is a Kubernetes platform_
 
 # odo: OpenShift Do
@@ -138,7 +147,8 @@ Our Webapp has a index.html page and one REST API.
 ![index page](index.png)
 ![REST API: hearbeat](rest.png)
 
-# OpenShift 4 on local machine with CodeReady Containers
+# CodeReady Containers
+* OpenShift 4 on local machine with CodeReady Containers, KVM, ...
 * _CodeReady Containers isn't Minishift- it's an entirely new approach to running Kubernetes locally._
 
 __quickstart (if already setup)__
@@ -200,7 +210,8 @@ __links__
 * https://libvirt.org/index.html
 * https://docs.openshift.com/container-platform/4.2/welcome/index.html
 
-# OpenShift on local machine
+# minishift
+* OpenShift on local machine with CKD, Minishift, Virtualbox
 
 __about__
 
