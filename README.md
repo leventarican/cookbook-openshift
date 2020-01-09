@@ -4,12 +4,15 @@
 3. [container](#docker-container-alternatives)
 4. [openshift](#openshift)
 5. [quarkus](#quarkus-example)
-6. [crc](#codeready-containers)
-6. [minishift](#minishift)
+6. [sammple app](#sample-application)
+7. [crc](#codeready-containers)
+8. [minishift](#minishift)
+9. [cheatsheet](#cheatsheet)
 
 _OpenShift is a Kubernetes platform_
 
-# odo: OpenShift Do
+# odo
+* odo: OpenShift Do
 * developer-focused CLI for OpenShift 
 * get odo
 ```
@@ -107,7 +110,19 @@ __UBI Images__
     * Binary S2I
 * https://github.com/quarkusio/quarkus-images
 
-__create builder image__
+## create builder image
+
+__example__
+
+* folder: `s2i-payara/`
+* created with: 
+```
+s2i create <imageName> <destination>
+s2i create payara-builderimage s2i-payara
+```
+
+__links__
+
 * https://docs.openshift.com/container-platform/3.11/creating_images/s2i.html#s2i-scripts
 * https://blog.openshift.com/create-s2i-builder-image/?extIdCarryOver=true&intcmp=7013a000002CtetAAC&sc_cid=701f2000001OH6pAAG
 
@@ -283,3 +298,24 @@ minishift ssh -- docker ps
 ```
 Error: Get https://192.168.0.20:8443/healthz/ready: dial tcp 192.168.0.20:8443: connectex: No connection could be made because the target machine actively refused it
 ```
+
+# cheatsheet
+`oc create`: Create a resource by filename or stdin
+
+`oc apply`: Apply a configuration to a resource by filename or stdin.
+
+`oc new-app`: Create a new application by specifying source code, templates, and/or images
+
+`oc process`: Process template into a list of resources specified in filename or stdin
+
+`oc <command> -h` or `oc <command> --help`: for more information about a given command.
+
+`oc get`: Display one or many resources
+
+`oc get template`: list templates in project
+
+`oc delete template <template>`: delete a template in project
+
+`oc delete all --selector app=<app>`: delete all resources belongs to app
+
+`oc get is -n <namespace>` or `oc get imagestreams -n <namespace>`: list images for given namespace
