@@ -4,12 +4,47 @@
 3. [container](#docker-container-alternatives)
 4. [openshift](#openshift)
 5. [quarkus](#quarkus-example)
-6. [sammple app](#sample-application)
+6. [sample app](#sample-application)
 7. [crc](#codeready-containers)
 8. [minishift](#minishift)
 9. [cheatsheet](#cheatsheet)
+10. [iac](#infrastructure-as-code)
 
 _OpenShift is a Kubernetes platform_
+
+# iac
+* infrastructure as code (IAC) with _Templates_
+* openshift REST api v3.11 based on kubernates v1.14
+    * on top it has for example Template API
+* you can write Template from scratch or export existing resource to yaml, json, ...
+
+__API reference__
+* you can use the CLI reference to list all resources
+```
+$ oc api-resources
+
+NAME                                  SHORTNAMES       APIGROUP                              NAMESPACED   KIND
+...
+pods                                  po                                                     true         Pod
+imagestreams                          is               image.openshift.io                    true         ImageStream
+templates                                              template.openshift.io                 true         Template
+...
+```
+
+* the full object schema
+```
+$ oc explain templates
+```
+
+* find out more about an attribute
+```
+oc explain templates.objects
+```
+
+## links
+* https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.14/#pod-v1-core
+* https://docs.openshift.com/container-platform/3.11/rest_api/api/v1.Pod.html#object-schema
+* https://docs.openshift.com/container-platform/3.11/rest_api/apis-template.openshift.io/v1.Template.html#object-schema
 
 # odo
 * odo: OpenShift Do
@@ -179,7 +214,7 @@ __virtualbox__
 * run crc: `crc start --vm-driver virtualbox --bundle path_to_system_bundle`
 
 __CRC virtual machine on ubuntu__
-* with KVM / libvirt (native hypervisor)
+* setup based on with KVM / libvirt (native hypervisor)
 * stop the CodeReady Containers virtual machine and OpenShift cluster: `crc stop`
 * `crc start` for debug: `crc start --log-level debug`
     * you will _once_ prompt for a image pull secret (a personalized secret)
