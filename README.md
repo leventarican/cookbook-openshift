@@ -200,9 +200,44 @@ Our Webapp has a index.html page and one REST API.
 # CodeReady Containers
 * OpenShift 4 on local machine with CodeReady Containers, KVM, ...
 * _CodeReady Containers isn't Minishift- it's an entirely new approach to running Kubernetes locally._
+> REMARK: you need a redhat account: https://cloud.redhat.com/openshift/install/crc/installer-provisioned
 
-__quickstart (if already setup)__
-* start: `crc start` (password will displayed)
+__install__
+* you need to download the compress image file from redhad ~ 2GB
+```
+https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/
+```
+* download / copy also the `pull_secret`. its necassary for the installation
+* a good intro gives this page: https://labs.consol.de/de/devops/linux/2019/11/29/codeready-containers-on-ubuntu.html
+* decompress
+```
+tar -xvJf crc-linux-amd64.tar.xz
+```
+* create a symbolic link
+```
+ln -s crc-linux-1.17.0-amd64/ crc
+```
+* add path to crc in your `~/.profile` file and reload it
+```
+PATH="$HOME/development/crc:$PATH"
+source .profile
+```
+* finally the setup
+```
+crc setup
+
+...
+Checking if CRC bundle is cached in '$HOME/.crc' 
+write NetworkManager config in /etc/NetworkManager/conf.d/crc-nm-dnsmasq.conf
+...
+```
+
+__quickstart__
+* start: `crc start` (promt for access token / `pull_secret`)
+* initially around ~10GB will be extracted
+```
+Extracting bundle: crc_libvirt_4.5.14.crcbundle ...
+```
 * stop: `crc stop`
 * open web console: `crc console`
 * openshift cli: `~/.crc/bin/oc` (add bin directory in your path)
@@ -240,7 +275,7 @@ Cache Usage:     11.01GB
 Cache Directory: /home/code/.crc/cache
 ```
 
-__troubleshooting__
+__troubleshooting 0__
 ```
 $ crc status
 ERRO Unable to connect to the server: dial tcp: lookup api.crc.testing: no such host
@@ -249,7 +284,30 @@ ERRO Unable to connect to the server: dial tcp: lookup api.crc.testing: no such 
 * ubuntu is not officially supported: _Ubuntu 18.04 LTS or newer and Debian 10 or newer are not officially supported and may require manual set up of the host machine._
     * https://code-ready.github.io/crc/#_linux
 * simple solution is to use NetworkManager instead systemd-resolver: https://labs.consol.de/devops/linux/2019/11/29/codeready-containers-on-ubuntu.html
-* other discussed solutions how to get work crc on ubuntu: https://github.com/code-ready/crc/issues/549
+* other discussed solutions how to get work crc on ubuntu: 
+    * https://github.com/code-ready/crc/issues/549
+
+__troubleshooting 1__
+```
+.crc/machines/crc/crc.qcow2' was not specified in the image metadata (See https://libvirt.org/kbase/backing_chains.html for troubleshooting)')
+```
+* https://github.com/code-ready/crc/issues/1596
+* https://stackoverflow.com/questions/64413928/starting-codeready-container-with-libvirt-cause-format-of-backing-image-was-not
+
+```
+qemu-img info ~/.crc/cache/crc_libvirt_4.5.14/crc.qcow2
+qemu-img rebase -f qcow2 -F qcow2 -b /home/${USER}/.crc/cache/crc_libvirt_4.5.14/crc.qcow2 /home/${USER}/.crc/machines/crc/crc.qcow2
+```
+* now you will face permission issues. either move to libvirt dir _OR_ add path to `/etc/apparmor.d/libvirt/TEMPLATE.qemu`
+```
+sudo mv /home/${USER}/.crc/machines/crc/crc.qcow2 /var/lib/libvirt/images
+```
+```
+profile LIBVIRT_TEMPLATE flags=(attach_disconnected) {
+  #include <abstractions/libvirt-qemu>
+  /home/${USER}/.crc/cache/crc_libvirt_4.5.14/crc.qcow2 rk,
+}
+```
 
 __links__
 * https://code-ready.github.io/crc/

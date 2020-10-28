@@ -1,0 +1,4 @@
+# needed during install of crc (CodeReady Containers)
+# https://cloud.redhat.com/openshift/install/crc/installer-provisioned
+pull-secret*
+
